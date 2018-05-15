@@ -17,7 +17,7 @@ class game():
         #修改句柄窗口大小
         #win32gui.MoveWindow(win,20,20,405,756,Truae)
     def huge_dragon(self):
-        print('huge_dragon')
+        print('巨龙')
         action.BaoZou()
         time.sleep(1)
         action.ShiXue()
