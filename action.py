@@ -1,5 +1,5 @@
 import  win32api,win32con,time
-#右右空格
+
 VK_CODE = {
     'backspace': 0x08,
     'tab': 0x09,
@@ -148,22 +148,42 @@ VK_CODE = {
     "'": 0xDE,
     '`': 0xC0}
 
-def BaoZou():
-    win32api.keybd_event(VK_CODE['right_arrow'], 0, 0, 0)
-    win32api.keybd_event(VK_CODE['right_arrow'], 0, win32con.KEYEVENTF_KEYUP, 0)
-    time.sleep(0.1)
-    win32api.keybd_event(VK_CODE['right_arrow'], 0, 0, 0)
-    win32api.keybd_event(VK_CODE['right_arrow'], 0, win32con.KEYEVENTF_KEYUP, 0)
-    time.sleep(0.1)
-    win32api.keybd_event(VK_CODE['spacebar'], 0, 0, 0)
-    win32api.keybd_event(VK_CODE['spacebar'], 0, win32con.KEYEVENTF_KEYUP, 0)
+#封装键盘操作
+def common(key):
+    win32api.keybd_event(VK_CODE[key], 0, 0, 0)
+    win32api.keybd_event(VK_CODE[key], 0, win32con.KEYEVENTF_KEYUP, 0)
 
+#暴走技能(→→空)
+def BaoZou():
+    common('right_arrow')
+    time.sleep(0.1)
+    common('right_arrow')
+    time.sleep(0.1)
+    common('spacebar')
+
+#嗜血技能(↑↓空)
 def ShiXue():
-    win32api.keybd_event(VK_CODE['up_arrow'], 0, 0, 0)
-    win32api.keybd_event(VK_CODE['up_arrow'], 0, win32con.KEYEVENTF_KEYUP, 0)
+    common('up_arrow')
     time.sleep(0.1)
-    win32api.keybd_event(VK_CODE['down_arrow'], 0, 0, 0)
-    win32api.keybd_event(VK_CODE['down_arrow'], 0, win32con.KEYEVENTF_KEYUP, 0)
+    common('up_arrow')
     time.sleep(0.1)
-    win32api.keybd_event(VK_CODE['spacebar'], 0, 0, 0)
-    win32api.keybd_event(VK_CODE['spacebar'], 0, win32con.KEYEVENTF_KEYUP, 0)
+    common('spacebar')
+
+#崩山击(a)
+def BengShanJi():
+    common('a')
+
+#移动跑动0.1ms为一个单位
+def running(direction,run_time):
+    direction_dict={ 'left': 0x25,
+                'up': 0x26,
+                'right': 0x27,
+                'down': 0x28,
+               }
+    win32api.keybd_event(direction_dict[direction], 0, 0, 0)
+    win32api.keybd_event(direction_dict[direction], 0, win32con.KEYEVENTF_KEYUP, 0)
+    time.sleep(0.5)
+    for i in range(1,run_time):
+        win32api.keybd_event(direction_dict[direction], 0, 0, 0)
+        win32api.keybd_event(direction_dict[direction], 0, win32con.KEYEVENTF_KEYUP, 0)
+        time.sleep(0.1)

@@ -1,6 +1,5 @@
-import win32gui,win32con
-from pykeyboard import PyKeyboard
-import skill
+import win32gui
+import action
 import time
 #句柄窗口名称
 windowname='1 - 记事本'
@@ -19,10 +18,12 @@ class game():
         #win32gui.MoveWindow(win,20,20,405,756,Truae)
     def huge_dragon(self):
         print('huge_dragon')
-        skill.BaoZou()
+        action.BaoZou()
         time.sleep(1)
-        skill.ShiXue()
-        time.sleep(1)
+        action.ShiXue()
+        time.sleep(2)
+        action.running('right', 10)
+        action.BengShanJi()
 
 
 if __name__ == '__main__':
